@@ -476,12 +476,7 @@ function renderCart() {
 // ✅ Confirmar Orden con SweetAlert y WhatsApp
 function confirmarOrden() {
   if (cart.length === 0) {
-    Swal.fire({
-      icon: "warning",
-      title: "Tu carrito está vacío 🛒",
-      text: "Agrega productos antes de confirmar la orden.",
-      confirmButtonColor: "#000"
-    });
+     alert("Tu Carrito está Vacio. ❌👀​");
     return;
   }
 
@@ -493,12 +488,7 @@ function confirmarOrden() {
   const total = document.getElementById("total").innerText;
 
   if (!nombre || !telefono || (tipoEntrega === "delivery" && !direccion)) {
-    Swal.fire({
-      icon: "info",
-      title: "Faltan datos 📝",
-      text: "Por favor completa todos los campos requeridos.",
-      confirmButtonColor: "#000"
-    });
+  alert("Tus datos están incompletos. 😱​❌👀​");
     return;
   }
 
@@ -513,11 +503,15 @@ function confirmarOrden() {
   mensaje += `💳 *Método de pago:* ${metodoPago}\n\n`;
   mensaje += `🛒 *Detalle del pedido:*\n`;
 
-  cart.forEach((item, index) => {
+  cart.forEach((item) => {
     const extrasTotal = item.addedExtras?.reduce((sum, e) => sum + e.price * e.quantity, 0) || 0;
     const totalItem = (item.price + extrasTotal) * item.quantity;
 
-    mensaje += `\n🍔 *${item.title}* x${item.quantity}\n💰 ${totalItem.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 })}\n`;
+    mensaje += `\n🍔 *${item.title}* x${item.quantity}\n💰 ${totalItem.toLocaleString("es-CO", {
+      style: "currency",
+      currency: "COP",
+      maximumFractionDigits: 0
+    })}\n`;
 
     if (item.removedIngredients?.length) {
       mensaje += `🧂 Sin: ${item.removedIngredients.join(", ")}\n`;
@@ -526,7 +520,11 @@ function confirmarOrden() {
     if (item.addedExtras?.length) {
       mensaje += `➕ *Adicionales:*\n`;
       item.addedExtras.forEach(ex => {
-        mensaje += `   • ${ex.name} x${ex.quantity} (${ex.price.toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 })})\n`;
+        mensaje += `   • ${ex.name} x${ex.quantity} (${ex.price.toLocaleString("es-CO", {
+          style: "currency",
+          currency: "COP",
+          maximumFractionDigits: 0
+        })})\n`;
       });
     }
 
@@ -542,30 +540,28 @@ function confirmarOrden() {
   const mensajeCodificado = encodeURIComponent(mensaje);
   const linkWhatsApp = `https://wa.me/${numeroNegocio}?text=${mensajeCodificado}`;
 
-  // ✅ SweetAlert de éxito + redirección a WhatsApp
-Swal.fire({
-  icon: "success",
-  title: "¡Orden confirmada! 🎉",
-  text: "Serás redirigido a WhatsApp para finalizar tu pedido.",
-  confirmButtonColor: "#000",
-  timer: 2500,
-  showConfirmButton: false,
-  didClose: () => {
-    window.open(linkWhatsApp, "_blank");
+  // ✅ SweetAlert de confirmación (sin temporizador)
+  // Swal.fire({
+  //   icon: "success",
+  //   title: "¡Orden confirmada! 🎉",
+  //   text: "serás dirigido a Whatsapp."
+  // });
 
-    // Limpieza
-    cart = [];
-    updateCartBadge();
-    localStorage.removeItem("cart");
+  alert("Tu pedido ha sido ordenado Correctamente. Te llevaremos a WhatsApp para confirmar tu orden ✅​🍔​");
+  
+      // 🔹 Abrir WhatsApp
+      window.open(linkWhatsApp, "_blank");
 
-    // Cerrar modal si existe
-    const modal = document.getElementById("cartModal");
-    const overlay = document.getElementById("overlay");
-    if (modal) modal.remove();
-    if (overlay) overlay.remove();
-  }
-});
+      // 🔹 Limpiar carrito
+      cart = [];
+      updateCartBadge();
+      localStorage.removeItem("cart");
 
+      // 🔹 Cerrar modal y overlay si existen
+      const modal = document.getElementById("cartModal");
+      const overlay = document.getElementById("overlay");
+      if (modal) modal.remove();
+      if (overlay) overlay.remove();
 }
 
 
