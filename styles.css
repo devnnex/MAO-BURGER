@@ -1,0 +1,137 @@
+* { box-sizing: border-box; margin:0; padding:0; font-family: 'Arial', sans-serif; }
+
+body {
+  background: #fff6e5;
+  color: #222;
+}
+
+.app-container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.cart-icon { position: relative; cursor:pointer; }
+.cart-icon #count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #f5c542;
+  color:#000;
+  font-size: 12px;
+  padding:2px 5px;
+  border-radius:50%;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 100px;
+}
+
+.product-card {
+  background:#fff;
+  border-radius: 15px;
+  padding:10px;
+  text-align:center;
+  box-shadow:0 5px 15px rgba(0,0,0,0.05);
+  cursor:pointer;
+  transition: transform 0.2s;
+}
+
+.product-card:hover { transform: translateY(-3px); }
+
+.product-card img { width:100%; height:120px; object-fit:cover; border-radius:12px; margin-bottom:5px; }
+
+.price-cart { display:flex; justify-content:space-between; align-items:center; }
+
+.add-cart {
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  background:#f0f0f0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  transition: 0.2s;
+}
+.add-cart:hover { background:#000; color:#fff; }
+
+.cart { position: fixed; bottom: 0; left:50%; transform:translateX(-50%); width:100%; max-width:420px; background:#fff; padding:10px; border-top-left-radius:20px; border-top-right-radius:20px; box-shadow:0 -5px 15px rgba(0,0,0,0.1); }
+.cart-total { margin:10px 0; font-weight:bold; }
+
+button { cursor:pointer; padding:6px 12px; border:none; border-radius:8px; margin:2px; background:#f5c542; font-weight:bold; }
+
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
+.modal-content { background:#fff; padding:20px; border-radius:15px; width:90%; max-width:400px; position:relative; }
+.close { position:absolute; top:10px; right:15px; font-size:20px; cursor:pointer; }
+
+#customNotes { width:100%; margin-top:10px; padding:5px; border-radius:8px; border:1px solid #ccc; }
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  box-sizing:border-box;
+}
+.modal-content {
+  background:#fff;
+  width:100%;
+  max-width:400px;
+  border-radius:15px;
+  padding:20px;
+  position:relative;
+}
+.close {
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:22px;
+  cursor:pointer;
+}
+#cartItemsContainer .cart-item {
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  padding:5px 0;
+  border-bottom:1px solid #ccc;
+}
+.cart-item button {
+  margin-left:5px;
+  cursor:pointer;
+}
+
+
+
+/* 🔹 Asegura que los SweetAlerts estén siempre visibles sobre los modales */
+.swal2-container {
+  z-index: 5000 !important;
+}
+
+.swal2-popup {
+  z-index: 5001 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25) !important;
+}
+
+.swal2-backdrop-show {
+  z-index: 4999 !important;
+}
